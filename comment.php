@@ -3,11 +3,12 @@
 	include('lib.php');
 	include('ChromePhp.php');
 
-		$aid=$_GET['a'];
 
+		$aid=$_GET['a'];
+		
 		//获取评论
 		//计算留言总数
-		$count_result = mysql_query("SELECT count(*) as count FROM comments where articleid='$aid'");
+		$count_result = mysql_query("SELECT count(*) as count FROM comments where aid='$aid'");
 		$count_array = mysql_fetch_array($count_result);
 
 		//计算总的页数
@@ -20,13 +21,7 @@
 		$offset = ($p-1)*$pagesize;
 
 
-		$sql="select * from comments where articleid = '$aid' ORDER BY addtime DESC LIMIT  $offset , $pagesize";
+		$sql="select * from comments ,users where comments.aid = '$aid' and comments.uid = users.id ORDER BY addtime ASC LIMIT  $offset, $pagesize";
 		$query=mysql_query($sql);
-		while ($comment_exist=mysql_fetch_array($query))
-		{
-			$comments[$comment_exist['addtime']]=$comment_exist['content'];
-		}
-		mysql_free_result($query);
-
 		include('templates/comment.php')
 ?>

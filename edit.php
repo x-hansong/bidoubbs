@@ -2,11 +2,28 @@
 	include('conn.php');
 	include('lib.php');
 	include('ChromePhp.php');
+	session_start();
+	// Chromephp::log($_SESSION['uid']);
+	// Chromephp::log($_SESSION['name']);
+	//如果会话没有被设置，查看是否设置了cookie
+	if(!isset($_SESSION['uid']))
+	{
+	    if(isset($_COOKIE['uid'])&&isset($_COOKIE['name']))
+	    {
+	        //用cookie给session赋值
+	        $_SESSION['uid']=$_COOKIE['uid'];
+	        $_SESSION['name']=$_COOKIE['name'];
+   		}
+   		else
+   		{
+   			header("Location: login.php");
+   			exit();
+   		}
+	}
 	//获取分类目录
 	if($_SERVER['REQUEST_METHOD'] == 'GET')
 	{
 		$aid=$_GET['a'];
-		$uid=0;
 		$sql="select id, name from categories";
 		$query=mysql_query($sql);
 		while ($node=mysql_fetch_assoc($query)) {
@@ -36,7 +53,7 @@
 		//ChromePhp::log($query); 
 		$time=time();
 
-		ChromePhp::log($aid); 
+	//	ChromePhp::log($aid); 
 
 		//上传图片
 		if ($_FILES['img']['error'] ==0 && ($_FILES['img']['type']=="image/gif"

@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css">
-<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
 
 
@@ -52,7 +52,7 @@
         		</li>
 
                 <li class="ui-field-contain">
-                    <label for="file">图片:</label>
+                    <label for="file">图片:(微信内置浏览器无法上传图片)</label>
                     <input type="file" name="img" id="file" /> 
                 </li>
         		<li class="ui-field-contain">
@@ -62,7 +62,7 @@
     		</ul>
 			
 		</form>
-
+        <p><?php echo $error ?></p>
 	</div>
 
 </body>

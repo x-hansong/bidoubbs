@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css">
-<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
 
 
@@ -19,23 +19,28 @@
 
 	<div data-role="page" id="view">
 		<div data-role="header">
-			<a  class="ui-btn-left ui-icon-back ui-btn  ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left "  data-rel="back" >返回</a>
+			<a  class="ui-btn-left ui-icon-back ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left "  data-rel="back" >返回</a>
 			<h1><?php echo $article['title'] ?></h1>
-			<a <?php echo 'href="templates/dialog.php?a=',$aid,'"'; ?> class="ui-btn-right ui-btn  ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-comment">评论</a>
+			<a <?php echo 'href="dialog.php?a=',$aid,'&touid=',$uid,'"'; ?> class="ui-btn-right ui-btn  ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-comment">评论</a>
 		</div>
 
 		<div role="main" class="ui-content">
 			<ul data-role="listview" data-inset="true" >
 				<li data-role="list-divider">逗论</li>
 				<?php 
-				foreach ($comments as $addtime => $content)
+
+				while ($comment_=mysql_fetch_array($query))
 				{
-					$ctime=showtime($addtime);
+					//Chromephp::log($comment_);
+					$ctime=showtime($comment_['addtime']);
 					echo '<li>
-							<img src="">
-							<p>',$content,'</p>
-							<p>',$ctime,'</p>
-							</li>';
+							<img src="',$comment_['cover'],'"><p>回复 ',$toname['name'],': 
+							',$comment_['content'],'</p>
+							<p>',$ctime,' </p>
+							<div>
+							<a href="dialog.php?a=',$aid,'&touid=',$comment_['uid'],'" class="ui-btn ui-btn-inline ui-mini ui-icon-comment ui-btn-right ui-btn-icon-right ">回复</a>
+							</div>
+						</li>';
 
 				}
 				mysql_free_result($query);

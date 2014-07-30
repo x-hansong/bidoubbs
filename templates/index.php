@@ -5,19 +5,52 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css">
-<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+<link rel="stylesheet" href="http://114.215.210.157/bidoubbs/js/jquery.mobile-1.4.3.min.css">
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://114.215.210.157/bidoubbs/js/jquery.mobile-1.4.3.min.js"></script>
 
 
-<script type="text/javascript">
+ 
+<script>  
+        $(document).on("pagecreate", function(){  
+            <!-- 利用ajax提交数据，不刷新整个页面 -->
 
-</script>
+  		$("#fav").click(function()
+  		{
+  			xmlhttp=new XMLHttpRequest();
+	
+			xmlhttp.onreadystatechange=function()
+		  	{
+		  		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		    	{
+		    		document.getElementById("fav").innerHTML="点赞"+xmlhttp.responseText;
+		    	}
+		 	}
+		 	xmlhttp.open("GET", "view.php?fav=1", true);
+		 	
+			
+			xmlhttp.send();
+		});
+
+	$("#col").click(function(){
+	    	xmlhttp=new XMLHttpRequest();
+			xmlhttp.onreadystatechange=function()
+	  		{
+	  			if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	    		{
+	    			alert(xmlhttp.responseText);
+	    		}
+	  		}
+	  		xmlhttp.open("GET", "view.php?col=1", true);
+			xmlhttp.send();
+	  });
+        });  
+
+    </script>  
+
+
 </head>
 <body>
-
-
-
 	<div data-role="page" id="all">
 		<div data-role="header">
 			<a href="create.php" class="ui-btn-left ui-icon-plus ui-btn  ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ">发帖</a>
@@ -33,16 +66,23 @@
 
 		<div role="main" class="ui-content">
 			<div class="content-primary">	
-				<ul data-role="listview" data-inset=	"true" data-filter="true" data-filter-placeholder="比逗一下">
+				<ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="比逗一下">
 					<li data-role="list-divider">逗贴集结号</li>
 					<?php
 					// Chromephp::log($article);
 						while ($article=mysql_fetch_array($query))
 						{
+							$uid=$article['uid'];
+							$query1=mysql_query("select * from users where id='$uid'");
+							$user=mysql_fetch_array($query1);
+							$time=showtime($article['edittime']);
 							echo '<li><a href="view.php?a=',$article['id'],'">
-							<img src="">
-							<p>',$article['title'],'</p>
-							</a></li>';
+							<img src="',$user['cover'],'">
+							<h3>',$article['title'],'</h3>
+							<p>',$user['name'],'</p>
+							<p>',$time,'</p>
+							</a>
+							</li>';
 							// Chromephp::log($article);
 						}
 						mysql_free_result($query);

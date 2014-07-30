@@ -1,7 +1,8 @@
 <?php 
     //定义常量
     $pagesize=3;
-
+    //默认头像路径
+    $default_cover='upload/07/21/2b5mpj.jpg';
 
 
 
