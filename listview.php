@@ -16,11 +16,7 @@
 	        $_SESSION['uid']=$_COOKIE['uid'];
 	        $_SESSION['name']=$_COOKIE['name'];
    		}
-   		else
-   		{
-   			header("Location: login.php");
-   			exit();
-   		}
+
 	}
 	$uid=$_SESSION['uid'];
 

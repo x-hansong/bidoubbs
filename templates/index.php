@@ -128,14 +128,23 @@
 					// Chromephp::log($article);
 						while ($article=mysql_fetch_array($query2))
 						{
+							$uid=$article['uid'];
+							$query1=mysql_query("select * from users where id='$uid'");
+							$user=mysql_fetch_array($query1);
+							$time=showtime($article['edittime']);
 							echo '<li><a href="view.php?a=',$article['id'],'">
-							<img src="">
-							<p>',$article['title'],'</p>
-							</a></li>';
+							<img src="',$user['cover'],'">
+							<h3>',$article['title'],'</h3>
+							<p>',$user['name'],'</p>
+							<p>',$time,'</p>
+							</a>
+							</li>';
 							// Chromephp::log($article);
 						}
 						mysql_free_result($query2);
+
 					?>
+
 				</ul>
 			</div>	
 		</div>

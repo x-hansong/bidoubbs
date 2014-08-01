@@ -70,10 +70,29 @@
 		<div role="main" class="ui-content">
 
 			<?php 
-				$edittime=showtime($article['addtime']);
-				echo '<p><pre>',$article['content'],'</pre></p>
-				<div style="text-align: center"><img style="width: 90%" src="',$article['img_path'],'"></div>
-				<p>发布于',$edittime,'</p>';
+			$edittime=showtime($article['addtime']);
+				if($article['img_path']==null)
+				{
+					//设置属性使pre标签自动换行
+					echo '<p><pre style="white-space:pre-wrap; /* css3.0 */
+				white-space:-moz-pre-wrap; /* Firefox */
+				white-space:-pre-wrap; /* Opera 4-6 */
+				white-space:-o-pre-wrap; /* Opera 7 */
+				word-wrap:break-word; /* Internet Explorer 5.5+ */">',$article['content'],'</pre></p>
+					<p style="font-size:13px;">发布于',$edittime,'</p>';
+				}
+				else
+				{
+					echo '<p><pre style="white-space:pre-wrap; /* css3.0 */
+				white-space:-moz-pre-wrap; /* Firefox */
+				white-space:-pre-wrap; /* Opera 4-6 */
+				white-space:-o-pre-wrap; /* Opera 7 */
+				word-wrap:break-word; /* Internet Explorer 5.5+ */">',$article['content'],'</pre></p>
+					<div style="text-align: center"><img style="width: 90%" src="',$article['img_path'],'"></div>
+					<p style="font-size:13px;">发布于',$edittime,'</p>';
+				}
+				
+				
 			?>
 
 			<button data-inline="true" data-mini="true" id="fav" >点赞<?php echo $fav; ?></button>

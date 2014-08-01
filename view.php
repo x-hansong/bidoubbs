@@ -20,17 +20,27 @@
 	        $_SESSION['name']=$_COOKIE['name'];
 	        
    		}
-   		else
-   		{
-   			header("Location: login.php");
-   			exit();
-   		}
 	}
 	if($_SERVER['REQUEST_METHOD'] == 'GET')
 	{
 		//处理收藏事件，处理完结束脚本
 		if ($_GET['col']==1) 
 		{
+				if(!isset($_SESSION['uid']))
+				{
+				    if(isset($_COOKIE['uid'])&&isset($_COOKIE['name']))
+				    {
+				        //用cookie给session赋值
+				        $_SESSION['uid']=$_COOKIE['uid'];
+				        $_SESSION['name']=$_COOKIE['name'];
+				        
+			   		}
+			   		else
+			   		{
+			   			echo "请先登陆";
+			   			exit();
+			   		}
+				}
 			$aid=$_COOKIE['cur_aid'];
 			$uid=$_SESSION['uid'];
 			//判断用户是否已经收藏过
@@ -53,6 +63,20 @@
 
 		if($_GET['fav']==1)
 		{
+				if(!isset($_SESSION['uid']))
+				{
+				    if(isset($_COOKIE['uid'])&&isset($_COOKIE['name']))
+				    {
+				        //用cookie给session赋值
+				        $_SESSION['uid']=$_COOKIE['uid'];
+				        $_SESSION['name']=$_COOKIE['name'];
+				        
+			   		}
+			   		else
+			   		{
+			   			exit();
+			   		}
+				}
 			$aid=$_COOKIE['cur_aid'];
 			$uid=$_SESSION['uid'];
 			ChromePhp::log($aid);
@@ -140,7 +164,7 @@
 	   		}
 	   		else
 	   		{
-	   			//header("Location: login.php");
+	   			header("Location: login.php");
 	   			exit();
 	   		}
 		}
